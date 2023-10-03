@@ -1,0 +1,44 @@
+name: CI/CD for Go and Node.js on Kubernetes
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Test Go Service
+        run: |
+          cd gosample
+          go build -o main .
+          go test ./...
+
+      - name: Build and Test Node.js Service
+        run: |
+          cd nodesample
+          npm install
+          npm test
+
+      - name: Build Docker Images
+        run: |
+          docker build -t gosample -f path/to/Dockerfile-golang .
+          docker build -t nodesample -f path/to/Dockerfile-node .
+
+      - name: Tag and Push Docker Images
+        run: |
+          docker tag gosample reynaldosp/gosample:latest
+          docker tag nodesample reynaldosp/nodesample:latest
+          docker push reynaldosp/gosample:latest
+          docker push reynaldosp/nodesample:latest
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f go-deployment.yaml
+          kubectl apply -f node-deployment.yaml
+

@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+spec:
+  rules:
+  - host: reynaldosp-pintu.com
+    http:
+      paths:
+      - path: /go
+        pathType: Prefix
+        backend:
+          service:
+            name: gosample
+            port:
+              number: 80
+      - path: /nodejs
+        pathType: Prefix
+        backend:
+          service:
+            name: nodesample
+            port:
+              number: 80
+

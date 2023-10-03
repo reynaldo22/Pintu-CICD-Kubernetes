@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gosample-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gosample
+  template:
+    metadata:
+      labels:
+        app: gosample
+    spec:
+      containers:
+        - name: gosample
+          image: reynaldosp/gosample:latest
+          ports:
+            - containerPort: 8080
+

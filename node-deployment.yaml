@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodesample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodesample
+  template:
+    metadata:
+      labels:
+        app: nodesample
+    spec:
+      containers:
+      - name: nodesample
+        image: reynaldosp/nodesample:latest
+        ports:
+        - containerPort: 3000
+

@@ -16,6 +16,7 @@ jobs:
       - name: Build and Test Go Service
         run: |
           cd gosample
+          go mod init
           go build -o main .
           go test ./...
 
